@@ -68,7 +68,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_ESC,
+		.code	= KEY_ENTER,
 		.gpio	= BUTTON_ESC,
 		.desc	= "Escape Button",
 		.active_low	= 1,
@@ -85,7 +85,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 #endif
 	{
 		.type	= EV_KEY,
-		.code	= KEY_UP,
+		.code	= KEY_RIGHT,
 		.gpio	= DPAD_UP,
 		.desc	= "DPAD Up",
 		.active_low	= 1,
@@ -93,7 +93,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_DOWN,
+		.code	= KEY_LEFT,
 		.gpio	= DPAD_DOWN,
 		.desc	= "DPAD Down",
 		.active_low	= 1,
@@ -101,7 +101,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_LEFT,
+		.code	= KEY_UP,
 		.gpio	= DPAD_LEFT,
 		.desc	= "DPAD Left",
 		.active_low	= 1,
@@ -109,7 +109,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_RIGHT,
+		.code	= KEY_DOWN,
 		.gpio	= DPAD_RIGHT,
 		.desc	= "DPAD Right",
 		.active_low	= 1,
@@ -117,7 +117,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_VOLUMEUP,
+		.code	= KEY_U,
 		.gpio	= BUTTON_VOLUMEUP,
 		.desc	= "Volume Up",
 		.active_low	= 1,
@@ -125,7 +125,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_VOLUMEDOWN,
+		.code	= KEY_D,
 		.gpio	= BUTTON_VOLUMEDOWN,
 		.desc	= "Volume Down",
 		.active_low	= 1,
@@ -133,7 +133,7 @@ static struct gpio_keys_button lf3000_buttons[] = {
 	},
 	{
 		.type	= EV_KEY,
-		.code	= KEY_ESC,
+		.code	= KEY_ENTER,
 		.gpio	= BUTTON_HOME,
 		.desc	= "Home Button",
 		.active_low	= 1,

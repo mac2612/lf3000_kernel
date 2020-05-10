@@ -1016,7 +1016,7 @@ struct platform_device nxp4330_device_ohci = {
 /*------------------------------------------------------------------------------
  * USB OTG Host or Gadget
  */
-#if defined(CONFIG_USB_DWCOTG)
+#if defined(CONFIG_USB_DWCOTG) || defined (CONFIG_USB_DWCOTG_MODULE)
 
 #include <linux/delay.h>
 #include <asm/io.h>

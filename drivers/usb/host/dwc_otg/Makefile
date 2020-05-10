@@ -17,7 +17,7 @@ endif
 
 # Use one of the following flags to compile the software in host-only or
 # device-only mode.
-#ccflags-y	+= -DDWC_HOST_ONLY
+ccflags-y	+= -DDWC_HOST_ONLY
 #ccflags-y	+= -DDWC_DEVICE_ONLY
 
 ccflags-y	+= -Dlinux -DDWC_HS_ELECT_TST
@@ -38,6 +38,7 @@ dwc_otg-objs	+= dwc_otg_pcd_linux.o dwc_otg_pcd.o dwc_otg_pcd_intr.o
 dwc_otg-objs	+= dwc_otg_hcd.o dwc_otg_hcd_linux.o dwc_otg_hcd_intr.o dwc_otg_hcd_queue.o dwc_otg_hcd_ddma.o
 dwc_otg-objs	+= dwc_otg_adp.o
 dwc_otg-objs	+= dwc_otg_mphi_fix.o
+dwc_otg-objs	+= ../dwc_common_port/dwc_common_linux.o
 ifneq ($(CFI),)
 dwc_otg-objs	+= dwc_otg_cfi.o
 endif
