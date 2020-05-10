@@ -17,7 +17,7 @@ endif
 
 # Use one of the following flags to compile the software in host-only or
 # device-only mode.
-ccflags-y	+= -DDWC_HOST_ONLY
+#ccflags-y	+= -DDWC_HOST_ONLY
 #ccflags-y	+= -DDWC_DEVICE_ONLY
 
 ccflags-y	+= -Dlinux -DDWC_HS_ELECT_TST
