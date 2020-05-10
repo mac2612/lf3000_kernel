@@ -1,0 +1,42 @@
+#
+# LF2000 V4L2 device drivers
+#
+menuconfig V4L2_LF2000
+    tristate "LF2000 V4L2 Devices"
+    depends on ARCH_CPU_NEXELL
+    select VIDEOBUF_DMA_CONTIG
+    select VIDEO_LF2000_DOUBLEBUF
+    select VIDEO_LF2000_DEBUGFS
+    select VIDEO_LF2000_SYSFS
+    default n
+    ---help---
+      LF2000 compatible V4L2 device for VIP.
+
+config VIDEO_LF2000_DEBUGFS
+	bool "debugfs entries for LF2000 VIP"
+	depends on V4L2_LF2000 && DEBUG_FS
+
+config VIDEO_LF2000_SYSFS
+	bool "sysfs entries for LF2000 VIP"
+	depends on V4L2_LF2000 && SYSFS
+
+if V4L2_LF2000
+
+menuconfig SOC_CAMERA_HI253
+    tristate "hi253 camera support"
+    depends on V4L2_LF2000 && SOC_CAMERA && I2C
+    select SOC_CAMERA_HYNIX_DEBUGFS
+    select SOC_CAMERA_HYNIX_SYSFS
+    default n
+    ---help---
+	  This is a V4L2 SoC camera driver for Hynix HI253 2MP sensors
+
+config SOC_CAMERA_HYNIX_DEBUGFS
+	bool "debugfs entries for Hynix YAC family sensors"
+	depends on SOC_CAMERA_HI253 && DEBUG_FS
+
+config SOC_CAMERA_HYNIX_SYSFS
+	bool "sysfs entries for Hynix YAC family sensors"
+	depends on SOC_CAMERA_HI253 && SYSFS
+
+endif

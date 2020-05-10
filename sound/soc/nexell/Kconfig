@@ -1,0 +1,99 @@
+#
+# Copyright 2010 Nexell.
+#
+# Configuration options for the Nexell Sound
+
+config SND_NEXELL_SOC
+	tristate "Nexell SoC Audio"
+	depends on ARCH_CPU_NEXELL
+	select AMBA_PL08X
+	help
+	  Say Y or M if you want to add support for codecs attached to
+	  the AC97 and I2S interface.
+
+config SND_NEXELL_I2S
+	tristate
+
+config SND_NEXELL_I2S_CH0
+	bool "I2S 0"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_I2S
+	default y
+
+config SND_NEXELL_I2S_CH1
+	bool "I2S 1"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_I2S
+	default n
+
+config SND_NEXELL_I2S_CH2
+	bool "I2S 2"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_I2S
+	default n
+
+config SND_NEXELL_SPDIF_TX
+	tristate
+
+config SND_NEXELL_SPDIF_RX
+	tristate
+
+config SND_SPDIF_TRANSCIEVER
+	tristate "SPDIF transciever (PCM)"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_SPDIF_TX
+	select SND_SOC_SPDIF
+
+config SND_SPDIF_RECEIVER
+	tristate "SPDIF receiver (PCM)"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_SPDIF_RX
+	select SND_SOC_SPDIF
+
+config SND_CODEC_NULL
+	tristate "I2S audio null codec."
+	depends on SND_NEXELL_I2S
+
+config SND_CODEC_RT5631
+	tristate "rt5631 I2S audio codec."
+	depends on SND_NEXELL_I2S
+	select SND_SOC_RT5631
+
+config SND_CODEC_LFP100
+	tristate "LFP100 I2S audio codec"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_SOC_I2S
+	select SND_SOC_LFP100
+	help
+	  Say Y or M to enable SoC support for LFP100 audio codec. 
+	  If unsure, say M.
+
+config SND_CODEC_ALC5623
+	tristate "ALC562(123) I2S audio codec."
+	depends on SND_NEXELL_I2S
+	select SND_SOC_ALC5623
+
+config SND_CODEC_ALC5633
+        tristate "alc5633 I2S audio codec."
+        depends on SND_NEXELL_I2S
+        select SND_SOC_ALC5633
+
+config SND_CODEC_WM8976
+	tristate "wm8976 (wm8978) I2S audio codec."
+	depends on SND_NEXELL_I2S
+	select SND_SOC_WM8978
+
+config SND_CODEC_CS42L51_NX
+	tristate "cs42l51 I2S audio codec(Nexell work)."
+	depends on SND_NEXELL_I2S
+	select SND_SOC_CS42L51_NX
+
+
+config SND_CODEC_TC94B26
+	tristate "TC94B26 I2S audio codec"
+	depends on SND_NEXELL_SOC
+	select SND_NEXELL_SOC_I2S
+	select SND_SOC_TC94B26
+	help
+		say Y or M to enable SoC support for the TC94B26 audio codec.
+		If unsure, say M.

@@ -1,0 +1,2 @@
+obj-$(CONFIG_TOUCHSCREEN_BCD_AP386X) += tu_drvs.o
+

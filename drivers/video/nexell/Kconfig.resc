@@ -1,0 +1,95 @@
+#
+# Video configuration
+#
+
+menu "Graphics support"
+	depends on HAS_IOMEM
+
+config FB_NEXELL_ION_MEM
+	bool "Allocate framebuffer with ION "
+	depends on FB_NEXELL
+	select ION
+	select ION_NXP
+	default n
+
+config FB0_NEXELL
+	bool "Support primary   frame buffer (/dev/fb0)"
+	depends on FB_NEXELL
+	select NEXELL_DISPLAY
+	select NEXELL_DISPLAY_1ST
+	default y
+
+	config FB0_NEXELL_DISPOUT
+		int "Display Out [0/1]"
+		depends on FB0_NEXELL
+		default 0
+
+config FB1_NEXELL
+	bool "Support secondary frame buffer (/dev/fb1)"
+	depends on FB_NEXELL
+	select NEXELL_DISPLAY
+	select NEXELL_DISPLAY_2ST
+	default n
+
+	config FB1_NEXELL_DISPOUT
+		int "Display Out [0/1]"
+		depends on FB1_NEXELL
+		default 1
+
+config NEXELL_DISPLAY_LCD
+	bool "LCD"
+	default n
+
+	config NEXELL_DISPLAY_LCD_IN
+		int "Display In  [0=Display 0, 1=Display 1, 2=Resolution Convertor]"
+		depends on NEXELL_DISPLAY_LCD
+		default 0
+
+config NEXELL_DISPLAY_LVDS
+	bool "LVDS"
+	default n
+
+	config NEXELL_DISPLAY_LVDS_IN
+		int "Display In  [0=Display 0, 1=Display 1, 2=Resolution Convertor]"
+		depends on NEXELL_DISPLAY_LVDS
+		default 0
+
+config NEXELL_DISPLAY_MIPI
+	bool "MIPI"
+
+	config NEXELL_DISPLAY_MIPI_IN
+		int "Display In  [0=Display 0, 1=Display 1, 2=Resolution Convertor]"
+		depends on NEXELL_DISPLAY_MIPI
+		default 0
+
+config NEXELL_DISPLAY_HDMI
+	bool "HDMI"
+
+	config NEXELL_DISPLAY_HDMI_IN
+		int "Display In  [0=Display 0, 1=Display 1, 2=Resolution Convertor]"
+		depends on NEXELL_DISPLAY_HDMI
+		default 0
+
+	choice
+		prompt "Resolution"
+		depends on NEXELL_DISPLAY_HDMI
+		default NEXELL_DISPLAY_HDMI_1280_720P
+
+	config	NEXELL_DISPLAY_HDMI_1280_720P
+		bool "1280 *  720p"
+
+	config	NEXELL_DISPLAY_HDMI_1920_1080P
+		bool "1920 * 1080p"
+
+	endchoice
+
+config NEXELL_DISPLAY_RESC
+	bool "RESOLUTION CONVERTOR"
+	default n
+
+	config NEXELL_DISPLAY_RESC_IN
+		int "Display In  [0=Display 0, 1=Display 1]"
+		depends on NEXELL_DISPLAY_RESC
+		default 0
+
+endmenu

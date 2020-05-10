@@ -1,0 +1,11 @@
+# NOTE: This Kconfig is not included by the Kconfig in the parent directory.
+# This is because this driver conflicts with the Nexell GPIO driver in
+# drivers/gpio and so the below has been placed in drivers/gpio/Kconfig for
+# clarity. Please use that file to make modifications to GPIO_LEAPFROG
+
+#config GPIO_LEAPFROG
+#	bool "LeapFrog GPIO Mappings"
+#	depends on ARCH_CPU_NEXELL && GPIOLIB
+#	help
+#	  Say yes here to use the LeapFrog virtual and physical pin
+#	  mapping scheme.

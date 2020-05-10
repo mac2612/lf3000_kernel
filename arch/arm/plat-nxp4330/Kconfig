@@ -1,0 +1,135 @@
+#
+# Copyright 2009 Nexell.
+#
+# Configuration options for the NXP4330
+
+config PLAT_NXP4330
+	bool
+	depends on ARCH_NXP4330
+	default y
+
+#
+# Select Board
+#
+
+comment "Board features"
+
+choice
+	prompt "Platform board"
+	default NXP4330_LEAPFROG
+
+	config PLAT_NXP4330_BLACKBOX
+		bool "BLACKBOX: blackbox board"
+		help
+			Support for the blackbox board.
+
+	config PLAT_NXP4330_DRONE
+		bool "DRONE: Android drone board"
+		help
+			Support for the drone board.
+
+	config PLAT_NXP4330_KAR
+		bool "KAR: Android Car Navigation board"
+		help
+			Support for the kar board.
+
+	config PLAT_NXP4330_LYNX
+		bool "LYNX: Android MID board"
+		help
+			Support for the android MID (Lynx) board.
+
+	config PLAT_NXP4330_MOON
+		bool "MOON: Linux CCTV board"
+		help
+			Support for the moon board.
+
+	config PLAT_NXP4330_MORPHEUS
+		bool "MORPHEUS: Android morpheus board"
+		help
+			Support for the android morpheus board.
+
+	config PLAT_NXP4330_NBOX
+		bool "NBOX: Android NBOX board"
+		help
+			Support for the android nbox board.
+
+	config PLAT_NXP4330_PYXIS
+		bool "PYXIS: Android Pyxis board"
+		help
+			Support for the android pysix tablet board.
+	
+	config PLAT_NXP4330_SECRET
+		bool "SECRET: Android secret board"
+		help
+			Support for the android secret board.
+
+	config PLAT_NXP4330_SMARTBOX
+		bool "SMARTBOX: Android Smart Box"
+		help
+			Support for the android smart box board.
+
+	config PLAT_NXP4330_VTK
+		bool "VTK: Validation Kit board"
+		help
+			Support for the validation kit board.
+
+	config PLAT_NXP4330_W7
+		bool "W7: Android w7 board"
+		help
+			Support for the android w7 tablet board.
+
+	config NXP4330_LEAPFROG
+		bool "LEAPFROG: LeapFrog boards"
+		help
+			Support for LeapFrog boards
+
+if (NXP4330_LEAPFROG)
+choice
+	prompt "LeapFrog Boards"
+	default PLAT_NXP4330_BOGOTA
+
+	config PLAT_NXP4330_BOGOTA
+		bool "BOGOTA: Leapfrog Bogota tablet"
+		depends on NXP4330_LEAPFROG
+		help
+			Support for LeapFrog Bogota tablet
+
+	config PLAT_NXP4330_XANADU
+		bool "XANADU: Leapfrog Xanadu tablet"
+		depends on NXP4330_LEAPFROG
+		help
+			Support for LeapFrog Xanadu tablet
+
+	config PLAT_NXP4330_GLASGOW
+		bool "GLASGOW: Leapfrog Glasgow console"
+		depends on NXP4330_LEAPFROG
+		help
+			Support for LeapFrog Glasgow console
+	
+	config PLAT_NXP4330_CABO
+		bool "CABO: Leapfrog Cabo tablet"
+		depends on NXP4330_LEAPFROG
+		help
+			Support for LeapFrog Cabo tablet
+	
+	config PLAT_NXP4330_QUITO
+		bool "QUITO: Leapfrog Quito tablet"
+		depends on NXP4330_LEAPFROG
+		help
+			Support for LeapFrog Quito tablet
+endchoice
+endif
+
+endchoice
+
+#
+# Board dependent configure
+#
+
+if PLAT_NXP4330_LYNX
+source "arch/arm/plat-nxp4330/lynx/Kconfig"
+endif
+
+if PLAT_NXP4330_SECRET
+source "arch/arm/plat-nxp4330/secret/Kconfig"
+endif

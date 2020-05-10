@@ -1,0 +1,5 @@
+config NXP4330_MP2TS_IF
+	tristate "NEXELL 4330 MP2TS driver"
+	depends on I2C
+	help
+	  Support for MP2TS I/F based on the NEXELL NXP4330 chip.

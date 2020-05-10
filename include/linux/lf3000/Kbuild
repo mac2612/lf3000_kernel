@@ -1,0 +1,3 @@
+header-y += gpio_ioctl.h
+header-y += gpio.h
+
