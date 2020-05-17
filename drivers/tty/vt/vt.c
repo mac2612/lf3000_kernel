@@ -3005,12 +3005,7 @@ int __init vty_init(const struct file_operations *console_fops)
 	tty_set_operations(console_driver, &con_ops);
 	if (tty_register_driver(console_driver))
 		panic("Couldn't register console driver\n");
-/*FWBOG-508 : games pause momentarily when we press DPAD_UP or DPAD_DN button.
- * it was traced backed to this routine. So not linking DPAD to VT driver for Bogota
- */
-#ifndef CONFIG_PLAT_NXP4330_BOGOTA
 	kbd_init();
-#endif
 	console_map_init();
 #ifdef CONFIG_MDA_CONSOLE
 	mda_console_init();
