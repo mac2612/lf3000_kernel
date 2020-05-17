@@ -809,7 +809,7 @@ static struct i2c_device_id tc94b26_id[] = {
 	{"tc94b26", 0},
 	{}
 };
-MODULE_DEVICE_TABLE(i2c, tc94b26);
+MODULE_DEVICE_TABLE(i2c, tc94b26_id);
 
 /* I2C bus identification */
 static struct i2c_driver tc94b26_i2c_driver = {
