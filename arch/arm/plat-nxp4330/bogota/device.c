@@ -375,7 +375,7 @@ static struct i2c_board_info __initdata icn85xx_i2c_info[] = {
 #if defined(CONFIG_TOUCHSCREEN_PAP11XX) || defined(CONFIG_TOUCHSCREEN_PAP11XX_MODULE)
 
 #include <linux/i2c.h>
-#include <pap11xx_touch.h>
+#include <plat/pap11xx_touch.h>
 #define	CTP_I2C_BUS		(2)
 
 struct pap11xx_i2c_platform_data pap11xx_pdata = {
@@ -478,7 +478,7 @@ static struct i2c_board_info elan_i2c_devices7[] = {
 #if defined(CONFIG_TOUCHSCREEN_BCD_AP386X) || defined(CONFIG_TOUCHSCREEN_BCD_AP386X_MODULE)
 
 #include <linux/i2c.h>
-#include <tu_drvs.h>
+#include <plat/tu_drvs.h>
 #define	CTP_I2C_BUS		(2)
 
 struct tu_platform_data tu_pdata = {
