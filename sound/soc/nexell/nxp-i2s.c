@@ -512,14 +512,26 @@ static int nxp_i2s_set_plat_param(struct nxp_i2s_snd_param *par, void *data)
 		unsigned int clkgen = nxp_cpu_periph_get_clock(clkidx, &clksrc, &clkdiv);
 		pr_debug("snd i2s: clk idx=%d, src=%d, div=%d, gen=%d\n", clkidx, clksrc, clkdiv, clkgen);
 		NX_CLKGEN_SetBaseAddress(clkidx, IO_ADDRESS(NX_CLKGEN_GetPhysicalAddress(clkidx)));
-#if defined(CONFIG_SND_CODEC_LFP100)
-		NX_CLKGEN_SetClockOutInv(clkidx, 0, 1);
-#elif defined (CONFIG_SND_CODEC_TC94B26)
-		NX_CLKGEN_SetClockOutInv(clkidx, 0, 0);
-#endif
-#if defined (CONFIG_SND_CODEC_TC94B26)
-		msleep(100);		/* let TC94B26 codec PLL startup */
-#endif
+		// FIXME: This should happen in the codec adapter modules but the NX_CLKGEN code isn't exported.
+		switch (get_leapfrog_platform()) {
+			// Cabo, Quito, Xanadu have LFP100.
+			case CABO:
+			case QUITO:
+			  NX_CLKGEN_SetClockOutInv(clkidx, 0, 1);
+			  break;
+			// Bogota, Xanadu have TC94B26
+			case BOGOTA:
+			case XANADU:
+			  NX_CLKGEN_SetClockOutInv(clkidx, 0, 0);
+			  msleep(100); /* let TC94B26 codec PLL startup */
+			  break;
+			// Glasgow has HDMI only, do nothing.
+			case GLASGOW:
+			  break;
+			default:
+			  printk("Unknown I2S codec config for board %d", get_leapfrog_platform());
+			  break;
+		}
 		clksrc = NX_CLKGEN_GetClockSource(clkidx, 0);
 		clkdiv = NX_CLKGEN_GetClockDivisor(clkidx, 0);
 		clkinv = NX_CLKGEN_GetClockOutInv(clkidx, 0);
