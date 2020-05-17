@@ -867,6 +867,8 @@ static DEVICE_ATTR(i2s_filename, S_IRUGO | S_IWUGO, sysfs_show_i2s_filename, sys
 
 #endif //CONFIG_I2S_DUMP_DATA
 
+#if defined(CONFIG_SND_CODEC_TC94B26)
+
 int tc94b26_set_locale(const char * locale);
 char * tc94b26_get_locale(void);
 static ssize_t sysfs_show_tc94b26_locale(struct device *dev,
@@ -888,6 +890,8 @@ static ssize_t sysfs_store_tc94b26_locale(struct device *dev,
 }
 
 static DEVICE_ATTR(tc94b26_locale, S_IRUGO | S_IWUGO, sysfs_show_tc94b26_locale, sysfs_store_tc94b26_locale);
+
+#endif //CONFIG_SND_CODEC_TC94B26
 
 static struct bus_type board_subsys = {
 	.name		= "board",
@@ -923,8 +927,10 @@ static int __init init_board_sysfs(void)
 	if (!error)
 		error = device_create_file(board_subsys.dev_root, &dev_attr_i2s_filename);
 #endif
+#if defined(CONFIG_SND_CODEC_TC94B26)
 	if (!error)
 		error = device_create_file(board_subsys.dev_root, &dev_attr_tc94b26_locale);
+#endif
 	return error;
 }
 
