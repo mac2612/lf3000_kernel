@@ -5,6 +5,8 @@
 #include <asm/io.h>
 #include <asm/delay.h>
 #include <asm/uaccess.h>
+#include <mach/platform.h>
+#include <mach/platform_id.h>
 
 
 /*
@@ -13,18 +15,15 @@
 #define MODULE_NAME "virtual-ts"
 #define DEVICE_NAME MODULE_NAME
 
-#if defined(CONFIG_PLAT_NXP4330_CABO)
-#define SCREEN_RES_X 480
-#define SCREEN_RES_Y 272
-#elif defined(CONFIG_PLAT_NXP4330_BOGOTA) || defined(CONFIG_PLAT_NXP4330_XANADU)
-#define SCREEN_RES_X 1024
-#define SCREEN_RES_Y 600
-#elif defined(CONFIG_PLAT_NXP4330_QUITO)
-#define SCREEN_RES_X 800
-#define SCREEN_RES_Y 480
-#else
-#error screen resolution undefined
-#endif
+#define CABO_SCREEN_RES_X 480
+#define CABO_SCREEN_RES_Y 272
+#define BOGOTA_SCREEN_RES_X 1024
+#define BOGOTA_SCREEN_RES_Y 600
+#define XANADU_SCREEN_RES_X 1024
+#define XANADU_SCREEN_RES_Y 600
+#define QUITO_SCREEN_RES_X 800
+#define QUITO_SCREEN_RES_Y 480
+
 
 #define MAX_CONTACTS 10   /* Max slots */
 #define MAX_PRESSURE 100  /* Max reported pressure for both MT / ST */
@@ -217,6 +216,32 @@ static int __init virtual_ts_init(void)
 {
   int err;
 
+  int screen_res_x = 0;
+  int screen_res_y = 0;
+
+	switch (get_leapfrog_platform()) {
+    case BOGOTA:
+      screen_res_x = BOGOTA_SCREEN_RES_X;
+      screen_res_y = BOGOTA_SCREEN_RES_Y;
+      break;
+    case CABO:
+      screen_res_x = CABO_SCREEN_RES_X;
+      screen_res_y = CABO_SCREEN_RES_Y;
+      break;
+    case XANADU:
+      screen_res_x = XANADU_SCREEN_RES_X;
+      screen_res_y = XANADU_SCREEN_RES_Y;
+      break;
+    case QUITO:
+      screen_res_x = QUITO_SCREEN_RES_X;
+      screen_res_y = QUITO_SCREEN_RES_Y;
+      break;
+    default:
+      printk("virtual-ts: Could not detect touchscreen resolution from board ID %d!\n", get_leapfrog_platform());
+      break;
+  }
+
+
   printk (MODULE_NAME ": init\n");
 
   input_dev = input_allocate_device();
@@ -231,15 +256,15 @@ static int __init virtual_ts_init(void)
       BIT_MASK(BTN_TOOL_TRIPLETAP) | BIT_MASK(BTN_TOOL_QUADTAP) |
       BIT_MASK(BTN_TOOL_QUINTTAP);
 
-  input_set_abs_params(input_dev, ABS_X, 0, SCREEN_RES_X, 0, 0);
-  input_set_abs_params(input_dev, ABS_Y, 0, SCREEN_RES_Y, 0, 0);
+  input_set_abs_params(input_dev, ABS_X, 0, screen_res_x, 0, 0);
+  input_set_abs_params(input_dev, ABS_Y, 0, screen_res_y, 0, 0);
   input_set_abs_params(input_dev, ABS_PRESSURE, 0, MAX_PRESSURE, 0, 0);
 
   __set_bit(INPUT_PROP_DIRECT, input_dev->propbit);
   input_mt_init_slots(input_dev, MAX_CONTACTS);
 
-  input_set_abs_params(input_dev, ABS_MT_POSITION_X, 0, SCREEN_RES_X, 0, 0);
-  input_set_abs_params(input_dev, ABS_MT_POSITION_Y, 0, SCREEN_RES_Y, 0, 0);
+  input_set_abs_params(input_dev, ABS_MT_POSITION_X, 0, screen_res_x, 0, 0);
+  input_set_abs_params(input_dev, ABS_MT_POSITION_Y, 0, screen_res_y, 0, 0);
   input_set_abs_params(input_dev, ABS_MT_PRESSURE, 0, MAX_PRESSURE, 0, 0);
 
   err = input_register_device(input_dev);
