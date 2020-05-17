@@ -31,6 +31,7 @@
 #include <mach/platform.h>
 #include <mach/devices.h>
 #include <mach/soc.h>
+#include <mach/platform_id.h>
 
 #ifdef CONFIG_NEXELL_DFS_BCLK
 #include <mach/nxp-dfs-bclk.h>
@@ -171,27 +172,32 @@ static int set_sample_rate_clock(struct clk *clk, unsigned long request,
 	if (0 == dio)
 		goto done;
 
-#if defined(CONFIG_PLAT_NXP4330_BOGOTA) || defined(CONFIG_PLAT_NXP4330_CABO) \
- || defined(CONFIG_PLAT_NXP4330_XANADU) || defined(CONFIG_PLAT_NXP4330_QUITO)
-	/* calculate clock divider from active PLL frequency */
-	rate = clk_set_rate(clk, clock);
-	div = rate / clock;
-	ret = 0;
-#else
-	/* form clock generator */
-	for (i = 1; 65 > i; i++, clock = i*request) {
-		find = clk_set_rate(clk, clock);
-		if (find > I2S_MAX_CLOCK)
+	switch (get_leapfrog_platform()) {
+		case BOGOTA:
+		case XANADU:
+		case CABO:
+		case QUITO:
+			/* calculate clock divider from active PLL frequency */
+			rate = clk_set_rate(clk, clock);
+			div = rate / clock;
+			ret = 0;
 			break;
-		din = abs((clock/i) - (find/i));
-		if (dio > din) {
-			dio = din, rate = find;
-			div = i, ret = 0;
-			if (0 == din)
-				break;
-		}
+		default:
+			/* form clock generator */
+			for (i = 1; 65 > i; i++, clock = i*request) {
+				find = clk_set_rate(clk, clock);
+				if (find > I2S_MAX_CLOCK)
+					break;
+				din = abs((clock/i) - (find/i));
+				if (dio > din) {
+					dio = din, rate = find;
+					div = i, ret = 0;
+					if (0 == din)
+						break;
+				}
+			}
+			break;
 	}
-#endif
 
 done:
 	pr_debug("%s: req=%ld, acq=%ld, div=%2d, %s\n",
