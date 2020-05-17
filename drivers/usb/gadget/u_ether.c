@@ -241,7 +241,7 @@ rx_submit(struct eth_dev *dev, struct usb_request *req, gfp_t gfp_flags)
 		goto enomem;
 	}
 
-#ifndef CONFIG_USB_ANDROID_RNDIS_DWORD_ALIGNED
+#if !defined(CONFIG_USB_ANDROID_RNDIS_DWORD_ALIGNED) && !defined(CONFIG_ARCH_NXP4330)
 	/* Some platforms perform better when IP packets are aligned,
 	 * but on at least one, checksumming fails otherwise.  Note:
 	 * RNDIS headers involve variable numbers of LE32 values.
