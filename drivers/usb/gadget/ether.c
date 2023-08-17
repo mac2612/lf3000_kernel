@@ -122,11 +122,9 @@ static inline bool has_rndis(void)
  * Instead:  allocate your own, using normal USB-IF procedures.
  */
 
-/* Thanks to NetChip Technologies for donating this product ID.
- * It's for devices with only CDC Ethernet configurations.
- */
-#define CDC_VENDOR_NUM		0x0525	/* NetChip */
-#define CDC_PRODUCT_NUM		0xa4a1	/* Linux-USB Ethernet Gadget */
+/* Match Belcarra Windows Driver */
+#define CDC_VENDOR_NUM		0x0f63	/* LeapFrog */
+#define CDC_PRODUCT_NUM		0x0010	/* Linux-USB Ethernet Gadget */
 
 /* For hardware that can't talk CDC, we use the same vendor ID that
  * ARM Linux has used for ethernet-over-usb, both with sa1100 and
